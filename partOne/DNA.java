@@ -55,7 +55,7 @@ public class DNA {
             }
 
             // adding the codon to the array list
-            String newCodon = findGene(Dna, StartIndex);
+            String newCodon = findGene(Dna, StartIndex);    
             if (newCodon == "") {
                 break;
             }
