@@ -12,19 +12,29 @@ public class DNA {
         int size = DnaCodons.size();
         int high60Count = 0;
         System.out.println("This Dna has " + size + " Codons.");
+        int cgcountmore = 0;
 
         // creating the project
         for (String DnaCodon : DnaCodons) {
             System.out.println(DnaCodon);
             System.out.println((DnaCodon.length()/3));
-            if ((DnaCodon.length()/3) >= 60) {
+            if ((DnaCodon.length()/3) > 60) {
                 high60Count++;
             }
+            float tmp = CGcount(DnaCodon);
+            System.out.println(tmp);
+            if (tmp > 0.35) {
+                cgcountmore++;
+            }
+
         }
 
 
         System.out.println("The amount of more than 60 letters is " + high60Count);
         codonCount(Dna);
+        System.out.println(cgcountmore);
+        ctgcount(Dna);
+
     }
 
     // Counting CTG
@@ -81,6 +91,18 @@ public class DNA {
         return Dna.substring(StartIndex, smallest + 3);
     }
 
+    public static void ctgcount(String Dna) {
+        int startPos = 0;
+        int pos = 0;
+        int count = 0;
+        while (pos != -1) {
+            pos = Dna.indexOf("CTG", startPos);
+            startPos = pos + 3;
+            count++;
+        }
+        System.out.println("CTG count: " + count);
+    }
+
     // method to check the codon
     public static int getCodon(String Dna, int StartIndex, String StopCodon) {
         int EndIndex = 0;
@@ -96,5 +118,22 @@ public class DNA {
             }
             StartIndex = EndIndex + 1;
         }
+    }
+
+    public static float CGcount(String Dna) {
+        Dna = Dna.toUpperCase();
+        // getting the full count of the dna
+        int FullCount = Dna.length();
+
+        // getting the count of c and g
+        int CandGcount = 0;
+        for (int i = 0; i < FullCount; i++) {
+            if (Dna.charAt(i) == 'C' || Dna.charAt(i) == 'G' ) {
+                CandGcount++;
+            }
+        }
+
+        float cgRario = (float) CandGcount / FullCount;
+        return cgRario;
     }
 }
